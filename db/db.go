@@ -341,6 +341,9 @@ ON CONFLICT (name) DO NOTHING`,
 	if err := d.migrateStockBrowserMCP(); err != nil {
 		return fmt.Errorf("migrate browser mcp: %w", err)
 	}
+	if err := d.seedAimlapiMCP(); err != nil {
+		return err
+	}
 	// NOTE: the placeholder ScopeSentry data-source MCP (empty URL + empty X-API-Key,
 	// disabled) is seeded directly in schema.sql §F so a raw `psql < schema.sql` init
 	// also gets it. schema.sql is Exec'd on every startup, so it stays idempotent.
